@@ -21,10 +21,7 @@ const categoriasInicio = [
 // ________________________
 // Guardar en Local Storage
 // ------------------------
-const grabar = (categoria) => {
-    console.log('estoy en grabar categoria', categoria); 
-    localStorage.setItem("categorias", JSON.stringify(categoria)); 
-}
+const grabar = (categoria) => localStorage.setItem("categorias", JSON.stringify(categoria)); 
 
 
 // _______________________________
@@ -32,11 +29,9 @@ const grabar = (categoria) => {
 // -------------------------------
 let $muestraCategorias = document.getElementById("muestraCategorias");
 const mostrar = () => {
-    console.log('estoy en mostrar categorias')
     $muestraCategorias.innerHTML = "";    // Borrar el contenido actual del div
     categorias = JSON.parse(localStorage.getItem("categorias"));
-    categorias.forEach(categoria => {        
-        
+    categorias.forEach(categoria => {                
         if ($muestraCategorias !== null) {    // Verificar si el elemento existe 
             let div = document.createElement("div"); // div para la categoría
             let spanCategoria = document.createElement("span"); // span para nombre
@@ -45,20 +40,15 @@ const mostrar = () => {
             
             let btnEditar = document.createElement("button");  // <button> para editar y llamado
             btnEditar.innerHTML = "Editar";
-            btnEditar.addEventListener("click", () => {   
-                console.log("Editar categoría:", categoria);  
-                editarCategoria(categoria.id);
-            });
+            btnEditar.addEventListener("click", () => editarCategoria(categoria.id));
             
             let btnBorrar = document.createElement("button");  // <button> para borrar y llamado
             btnBorrar.innerHTML = "Borrar";
             btnBorrar.addEventListener("click", () => {   
-                console.log("Borrar categoría:", categoria);
                 borrarCategoria(categoria.id);     
             });
-
-            // Agregar los elementos al <div>
-            div.appendChild(spanCategoria);
+            
+            div.appendChild(spanCategoria);  // Agregar los3  elementos al <div>
             div.appendChild(btnEditar);
             div.appendChild(btnBorrar);
 
@@ -77,14 +67,11 @@ let valorGuardado;
 let categorias;
 let iniciaCategorias = () => {
     valorGuardado = localStorage.getItem("categorias");
-    // Verificar si el valor es null o representa un array vacío
-    if (valorGuardado === null ){
-       console.log("Local Storage no tiene nada guardado para la clave 'categorias'");
+    if (valorGuardado === null ){   // Verificar si el valor es null
         categorias = categoriasInicio;
         grabar(categorias);  // guarda las categorías con localStorage
         mostrar(categorias);
     } else {
-        console.log('Hay algo guardado', valorGuardado)
         mostrar(categorias);
     }
 }
@@ -101,7 +88,6 @@ const armadoArrayGuardar = (categoria) =>{
         let categoriasUnicas = revisarCategoriasDuplicadas(categoriasParaGuardar, categoriasAlmacenadas);
         arrayListoParaGuardar = categoriasAlmacenadas.concat(categoriasUnicas); // Concatenar las nuevas categorías con las almacenadas
         localStorage.setItem("categorias", JSON.stringify(arrayListoParaGuardar)); // Guardar las categorías actualizadas en el almacenamiento local
-        console.log(arrayListoParaGuardar);
     } else {
         arrayListoParaGuardar = categoriasParaGuardar; // Si no hay categorías almacenadas, guardar las nuevas categorías directamente
         localStorage.setItem("categorias", JSON.stringify(arrayListoParaGuardar)); // Guardar las categorías en el almacenamiento local
@@ -115,16 +101,7 @@ const armadoArrayGuardar = (categoria) =>{
 // -------------------------
 let $categoria = document.getElementById("categoria");
 let nuevaCategoria = '';
-const ingresarCategoria = () => {
-    console.log('estoy ingresando nueva categoria',$categoria.value)
-    return nuevaCategoria = $categoria.value.trim();
-    
-
-    // categorias = crearCategoria($categoria.value);
-    // console.log('resultado de crear categoria',nuevaCategoria);
-    // grabar(categorias);  // guarda las categorías con localStorage
-    // mostrar(categorias);
-}
+const ingresarCategoria = () => {return nuevaCategoria = $categoria.value.trim()};
 
 // Función cerrar mensaje por categorías duplicadas
 const $mjeCatDuplicada = document.getElementById("mjeCatDuplicada");
@@ -138,7 +115,6 @@ $cerrar.addEventListener('click', ()=>{
 // Función evitar ingreso de categorías duplicadas
 // -----------------------------------------------
 const revisarCategoriasDuplicadas = (categoriasParaGuardar, categoriasAlmacenadas) => {
-    console.log('estoy en categorias duplicadas');
     return categoriasParaGuardar.filter(nuevaCategoria => {
         // Convertir nombres de categoría a mayúsculas para comparación
         const nombreNuevaCategoria = nuevaCategoria.nombre.toUpperCase();
@@ -147,20 +123,14 @@ const revisarCategoriasDuplicadas = (categoriasParaGuardar, categoriasAlmacenada
         const categoriaDuplicada = categoriasAlmacenadas.some(categoria => categoria.nombre.toUpperCase() === nombreNuevaCategoria);
         
         if (categoriaDuplicada) {
-            console.log(`La categoría ${nuevaCategoria.nombre} ya está almacenada.`);
             $mjeCatDuplicada.classList.add("visible"); 
         }
-        
-        console.log('estoy en categorias duplicadas', categoriaDuplicada);
         return !categoriaDuplicada; // Devolver true si no hay categorías duplicadas
     });
 }
 
     
-$categoria.addEventListener('input', (e)=>{
-    $categoria.value = ingresarCategoria ();
-    // console.log('estoy en evento input ingresar categoria', $categoria.value)
-})
+$categoria.addEventListener('input', (e)=> $categoria.value = ingresarCategoria ());
 
 const $cerrarCatVacia = document.getElementById("cerrarCatVacia");
 const $mjeCatVacia = document.getElementById("mjeCatVacia");
@@ -170,8 +140,7 @@ let $botonIngresoCategoria = document.getElementById('botonIngresoCategoria');
 $botonIngresoCategoria.addEventListener('click', (e) => {
     let valorCategoria = $categoria.value.trim();    // Obtener el valor del input de la categoría  
     if (valorCategoria !== "") {  //evita ingreso de categoría vacía
-       let nuevaCategEncrip = crearCategoria(valorCategoria);
-        console.log(nuevaCategEncrip, typeof(nuevaCategEncrip));
+        let nuevaCategEncrip = crearCategoria(valorCategoria);
         let categoriasParaGuardar = armadoArrayGuardar(nuevaCategEncrip);
         grabar(categoriasParaGuardar);
         mostrar();
@@ -182,114 +151,16 @@ $botonIngresoCategoria.addEventListener('click', (e) => {
 });
 
 
-// const editarCategoria = (id) => {
-//     const $contenedorEditarCategoria = document.getElementById("contenedorEditarCategoria");
-//     $contenedorEditarCategoria.classList.add("visible");
-//     const $editarCategoria = document.getElementById("editarCategoria");
-//     const $botonCancelarEditarCategoria = document.getElementById("botonCancelarEditarCategoria");
-//     const $botonGrabarEditarCategoria = document.getElementById("botonGrabarEditarCategoria");
-    
-//     console.log('Estoy editando categoría');
-    
-//     // Obtener categorías del localStorage
-//     let categorias = JSON.parse(localStorage.getItem("categorias"));
-    
-//     // Encontrar la categoría a editar
-//     let categoriaAEditar = categorias.find(categoria => categoria.id === id);
-    
-//     // Mostrar el nombre de la categoría a editar en el input
-//     $editarCategoria.value = categoriaAEditar.nombre;
-    
-//     // Event listener para el botón "Cancelar"
-//     $botonCancelarEditarCategoria.addEventListener('click', () => {
-//         // Limpiar el valor del input al hacer clic en el botón "Cancelar"
-//         $editarCategoria.value = "";
-//         $contenedorEditarCategoria.classList.remove("visible");
-//     });
-    
-//     // Event listener para el botón "Grabar"
-//     $botonGrabarEditarCategoria.addEventListener('click', () => {
-//         const nuevoNombre = $editarCategoria.value.trim();
-        
-//         if (nuevoNombre !== "") {
-//             // Actualizar el nombre de la categoría en el arreglo de categorías
-//             categoriaAEditar.nombre = nuevoNombre;
-            
-//             // Llamar a la función grabar con todas las categorías
-//             grabar(categorias);
-            
-//             // Mostrar las categorías actualizadas
-//             mostrar();
-//             $contenedorEditarCategoria.classList.remove("visible");
-//         } else {
-//             console.log("El nuevo nombre de la categoría no puede estar vacío.");
-//         }
-//     });
-// };
-
-
-// const editarCategoria = (id) => {
-//     const $contenedorEditarCategoria = document.getElementById("contenedorEditarCategoria");
-//     $contenedorEditarCategoria.classList.add("visible");
-//     const $editarCategoria = document.getElementById("editarCategoria");
-//     const $botonCancelarEditarCategoria = document.getElementById("botonCancelarEditarCategoria");
-//     const $botonGrabarEditarCategoria = document.getElementById("botonGrabarEditarCategoria");
-    
-//     console.log('Estoy editando categoría');
-    
-//     // Obtener categorías del localStorage
-//     let categorias = JSON.parse(localStorage.getItem("categorias"));
-    
-//     // Encontrar la categoría a editar
-//     let categoriaAEditar = categorias.find(categoria => categoria.id === id);
-    
-//     // Mostrar el nombre de la categoría a editar en el input
-//     $editarCategoria.value = categoriaAEditar.nombre;
-    
-//     // Event listener para el botón "Cancelar"
-//     $botonCancelarEditarCategoria.addEventListener('click', () => {
-//         // Limpiar el valor del input al hacer clic en el botón "Cancelar"
-//         $editarCategoria.value = "";
-//         $contenedorEditarCategoria.classList.remove("visible");
-//     });
-    
-//     // Event listener para el botón "Grabar"
-//     $botonGrabarEditarCategoria.addEventListener('click', () => {
-//         const nuevoNombre = $editarCategoria.value.trim();
-        
-//         if (nuevoNombre !== "") {
-//             // Actualizar el nombre de la categoría en el arreglo de categorías
-//             categoriaAEditar.nombre = nuevoNombre;
-            
-//             // Verificar duplicados con la función revisarCategoriasDuplicadas
-//             let categoriasSinDuplicados = revisarCategoriasDuplicadas([categoriaAEditar], categorias);
-            
-//             if (categoriasSinDuplicados.length === 1) { // Si el arreglo tiene solo 1 elemento, significa que no hay duplicados
-//                 // Llamar a la función grabar con todas las categorías
-//                 grabar(categorias);
-                
-//                 // Mostrar las categorías actualizadas
-//                 mostrar();
-//                 $contenedorEditarCategoria.classList.remove("visible");
-//             } else {
-//                 console.log("La categoría editada ya existe.");
-//             }
-//         } else {
-//             console.log("El nuevo nombre de la categoría no puede estar vacío.");
-//         }
-//     });
-// };
-
-
+// ________________________
+// Función editar categoría
+// ------------------------
 const editarCategoria = (id) => {
     const $contenedorEditarCategoria = document.getElementById("contenedorEditarCategoria");
     $contenedorEditarCategoria.classList.add("visible");
     const $editarCategoria = document.getElementById("editarCategoria");
     const $botonCancelarEditarCategoria = document.getElementById("botonCancelarEditarCategoria");
     const $botonGrabarEditarCategoria = document.getElementById("botonGrabarEditarCategoria");
-    
-    console.log('Estoy editando categoría');
-    
+        
     // Obtener categorías del localStorage
     let categorias = JSON.parse(localStorage.getItem("categorias"));
     
@@ -340,22 +211,19 @@ const editarCategoria = (id) => {
 };
 
 
-
-
-
-
-
 //--------------------------   
 // Función borrar categoría
 // -------------------------
 const borrarCategoria = (id) => {
     const categorias = JSON.parse(localStorage.getItem("categorias")); //si no hay datos almacenados será array vacío 
     const nuevasCategorias = categorias.filter(categoria => categoria.id !== id);  // Filtrar las categorías, excluyendo la del id
-    console.log(nuevasCategorias.nombre);
     grabar(nuevasCategorias);  // Guardar las nuevas categorías en el localStorage   
     mostrar();  // Mostrar las categorías actualizadas
 };
 
+// ___________________________________
+// Llamado para restaurar las categorías
+// -----------------------------------
 iniciaCategorias();
 
  
