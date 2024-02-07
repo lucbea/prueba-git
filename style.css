@@ -1,0 +1,18 @@
+.visible {
+    display:block !important;
+}
+
+#mjeCatDuplicada, #mjeCatVacia{
+    display:none;
+    width: 30%;
+    position: absolute;
+    top: 45%;
+    left:35%;
+    background-color: rgb(204, 193, 193);
+    height: 80px;
+    text-align: center;
+}
+
+#contenedorEditarCategoria{
+    display:none;
+}
