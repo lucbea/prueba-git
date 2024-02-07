@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>prueba de Git</title>
-	</head>
-	<body>
-		<nav>
-			<button id="botonCategorias">Categorias</button>
-			<button id="botonReporte">Reporte</button>
-		</nav>
-		<main>
-			<div class="contenedorCategoria">
-				<h2>CATEGORIA</h2>
-				<div id="ingresoCategoria" class="ingresoCategoria">
-					<label for="categoria">Nombre</label>
-					<div class="contenedorIngresoCat">
-						<input id="categoria" type="text" />
-						<button id="botonIngresoCategoria">AGREGAR</button>
-					</div>
-				</div>
-				<div id="muestraCategorias"></div>
-			</div>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js"></script> <!-- Genera códigos encriptados -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>prueba de Local Storage</title>
+</head>
+<body>
+    <nav></nav>
+    <main>
+    <div class="contenedorCategoria">
+        <h2>CATEGORIA</h2>
+        <div id="ingresoCategoria" class="ingresoCategoria">
+            <label for="categoria">Nombre</label>
+            <div class="contenedorIngresoCat">
+                <input id="categoria" type="text">
+                <button id="botonIngresoCategoria">AGREGAR</button>
+            </div>
+        </div>
+        <div id="muestraCategorias">
 
         </div>
-       
     </div>
-			<div id="elements"></div>
 
-			<div>
-				<h2>Magui</h2>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur
-				laborum quis, dignissimos aliquid soluta veritatis, corporis eum
-				perspiciatis reprehenderit, maxime debitis ea quae reiciendis error
-				explicabo. Ex ercitationem libero minima reiciendis. Lorem ipsum, dolor
-				sit amet consectetur adipisicing elit. Excepturi officiis quae, dicta,
-				nesciunt quas similique esse modi rerum enim qui ipsa, aperiam minus
-				beatae consectetur expedita! Et tempora neque laudantium.
-			</div>
-             <div>
-                <H2>LU</H2>
-                <span>MODIFICACIONES  DE  LU</span>
+    <div id="elements">
+
+    </div>
+    <div id="contenedorEditarCategoria">
+        <h2>EDITAR CATEGORIA</h2>
+        <div id="ingresoEditarCategoria" class="ingresoEditarCategoria">
+            <label for="editarCategoria">Nombre</label>
+            <div class="contenedorIngresoEditarCat">
+                <input id="editarCategoria" type="text">
+                <button id="botonCancelarEditarCategoria">Cancelar</button>
+                <button id="botonGrabarEditarCategoria">Grabar</button>
             </div>
-            <div>
-                <h2>Lu, de nuevo</h2>
-                <span>Segundo cambio de Lu</span>
-            </div>
-		</main>
-	</body>
-	<script src="./script.js"></script>
-	<script src="./script.js"></script>
+        </div>
+    </div>
+    <div id="mjeCatDuplicada">
+        <p>La categoría ingresada ya se encuentra registrada</p>
+        <button id="cerrar">Cerrar ventana</button>
+    </div>
+    <div id="mjeCatVacia">
+        <p>No se ha ingresado categoría</p>
+        <button id="cerrarCatVacia">Cerrar ventana</button>
+    </div>
+    </main>
+</body>
+<script src="./script.js"></script>
 </html>
+
